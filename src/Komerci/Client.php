@@ -12,11 +12,11 @@ class Client
     const WSDL_URL = 'https://ecommerce.redecard.com.br/pos_virtual/wskomerci/cap.asmx?WSDL';
     
     public static function SoapRequest($methodName, array $parameters, $debug = false, $wsdlUrl = self::WSDL_URL) {
-        $soapParams = array();
+        $soapClientParams = array();
         if ($debug) {
-            $soapParams['trace'] = 1;
+            $soapClientParams['trace'] = 1;
         }
-        $soapClient = new \SoapClient($wsdlUrl, $soapParams);
+        $soapClient = new \SoapClient($wsdlUrl, $soapClientParams);
         $soapResult = $soapClient->__soapCall($methodName, $parameters);
         if ($debug) {
             var_dump($soapClient->__getLastRequest());
@@ -26,4 +26,6 @@ class Client
         
         return $xmlResult;
     }
+    
+    
 }

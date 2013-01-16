@@ -398,7 +398,7 @@ class CaptureCancel
                 'Total' => $this->total,
                 'Data' => $this->data,
                 'NumAutor' => $this->numAutor,
-                'NumCv' => $this->numCv,
+                'NumCV' => $this->numCv,
                 'Concentrador' => $this->concentrador,
                 'Usr' => $this->usr,
                 'Pwd' => $this->pwd
