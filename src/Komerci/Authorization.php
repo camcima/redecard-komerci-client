@@ -719,6 +719,11 @@ class Authorization
         return $this;
     }
 
+    /**
+     * Get Request Array
+     * 
+     * @return array
+     */
     protected function getRequestArray()
     {
         return array(
@@ -759,9 +764,7 @@ class Authorization
      */
     public function send()
     {
-        $soapClient = new \SoapClient('https://ecommerce.redecard.com.br/pos_virtual/wskomerci/cap.asmx?WSDL');
-        $soapResult = $soapClient->__soapCall('GetAuthorized', $this->getRequestArray());
-        $xmlResult = $soapResult->GetAuthorizedResult->any;
+        $xmlResult = Client::SoapRequest('GetAuthorized', $this->getRequestArray());
         $authorizationResponse = new AuthorizationResponse();
         $authorizationResponse->setResultXml($xmlResult);
 

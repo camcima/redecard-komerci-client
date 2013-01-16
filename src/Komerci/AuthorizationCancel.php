@@ -3,17 +3,14 @@
 namespace Komerci;
 
 /**
- * Capture
+ * Description of AuthorizationCancel
  * 
- * Realizar a confirmação do passo1 da transação de pré-autorização para que esta possa ser faturada.
- * O estabelecimento tem até 30 dias para realizar este passo.
- * Este método requer autenticação de Usuário e Senha e validação
- * do cadastramento através do Anexo B: “Gerenciamento de Usuários
- * Webservices”.
+ * Essa operação tem como objetivo cancelar a sensibilização do saldo do cartão do portador
+ * utilizando o método VoidPreAuthorization.
  *
  * @author Carlos Cima
  */
-class Capture
+class AuthorizationCancel
 {
     /**
      * Número de filiação do estabelecimento (fornecedor)
@@ -27,9 +24,18 @@ class Capture
     protected $filiacao;
 
     /**
-     * DISTRIBUIDOR
+     * Distribuidor
      * 
-     * N/A - Enviar parâmetro com valor vazio
+     * Número de filiação do estabelecimento distribuidor ou da empresa compradora (B2B)
+     * 
+     * O parâmetro “DISTRIBUIDOR” é específico para estabelecimentos que vendem através de distribuidores
+     * ou que realizam B2B. Ele deverá conter o nº de filiação do estabelecimento responsável pela transação
+     * (distribuidor ou empresa compradora de B2B), cadastrado junto a Redecard. Caso o estabelecimento
+     * não pertença aos segmentos citados acima ou caso o próprio fornecedor é que seja o responsável
+     * pela transação em questão, basta enviar este parâmetro com valor vazio.
+     * 
+     * Obs: O distribuidor só pode confirmar as transações de pré-autorização
+     * que ele mesmo realizou, em nome e em favor de seu fornecedor.
      * 
      * 9 bytes
      * 
@@ -41,29 +47,19 @@ class Capture
      * Valor total da compra
      * 
      * O parâmetro “TOTAL” deverá conter o valor total da transação.
-     * Este valor deverá ser separado por “.” (ponto). Exemplo: 34.60
-     * Não deve conter separador de milhar
-     * É obrigatória a existência de duas casas decimais.
+     * 
+     * Obs1: Este valor deverá ser separado por “.” (ponto). Exemplo: 34.60
+     * Obs2: Não deve conter separador de milhar
+     * Obs3: É obrigatória a existência de duas casas decimais.
+     * Obs4: No caso específico de Companhias Aéreas, este parâmetro
+     * deverá conter o valor resultante da somatória dos valores das
+     * passagens aéreas sem a “Taxa de Embarque”.
      * 
      * 10 bytes
      * 
      * @var string
      */
     protected $total;
-
-    /**
-     * Número de Parcelas
-     * 
-     * O parâmetro “PARCELAS” deverá conter o nº de parcelas da transação no formato “99”. A decisão
-     * sobre o parcelamento ou não da transação é tomada neste momento de confirmação, e não
-     * na solicitação de captura de pré-autorização (Passo 1). Para efetuar transações à vista, o parâmetro
-     * “PARCELAS” deverá ser preenchido com o valor “00” (zero zero).
-     * 
-     * 2 bytes
-     * 
-     * @var string
-     */
-    protected $parcelas;
 
     /**
      * Data da transação
@@ -102,16 +98,19 @@ class Capture
     protected $numCv;
 
     /**
-     * CONCENTRADOR
+     * Concentrador
      * 
-     * N/A - Enviar parâmetro com valor vazio
+     * O parâmetro “CONCENTRADOR” deverá conter o código do concentrador.
+     * 
+     * Este dado não está sendo utilizado atualmente. Envie este parâmetro
+     * com valor vazio, a menos que receba instrução contrária.
      * 
      * 5 bytes
      * 
      * @var string
      */
     protected $concentrador = '';
-    
+
     /**
      * Código do usuário Master
      * 
@@ -123,7 +122,7 @@ class Capture
      * @var string
      */
     protected $usr;
-    
+
     /**
      * Senha de acesso do usuário Master
      * 
@@ -135,8 +134,6 @@ class Capture
      */
     protected $pwd;
 
-    
-    
     /**
      * Get Filiacao
      * 
@@ -163,24 +160,75 @@ class Capture
      * 9 bytes
      * 
      * @param string $filiacao
-     * @return \Komerci\Capture
+     * @return \Komerci\AuthorizationCancel
      */
     public function setFiliacao($filiacao)
     {
         $this->filiacao = $filiacao;
-        
+
+        return $this;
+    }
+
+    /**
+     * Get Distribuidor
+     * 
+     * Número de filiação do estabelecimento distribuidor ou da empresa compradora (B2B)
+     * 
+     * O parâmetro “DISTRIBUIDOR” é específico para estabelecimentos que vendem através de distribuidores
+     * ou que realizam B2B. Ele deverá conter o nº de filiação do estabelecimento responsável pela transação
+     * (distribuidor ou empresa compradora de B2B), cadastrado junto a Redecard. Caso o estabelecimento
+     * não pertença aos segmentos citados acima ou caso o próprio fornecedor é que seja o responsável
+     * pela transação em questão, basta enviar este parâmetro com valor vazio.
+     * 
+     * Obs: O distribuidor só pode confirmar as transações de pré-autorização
+     * que ele mesmo realizou, em nome e em favor de seu fornecedor.
+     * 
+     * 9 bytes
+     * 
+     * @return string
+     */
+    public function getDistribuidor()
+    {
+        return $this->distribuidor;
+    }
+
+    /**
+     * Set Distribuidor
+     * 
+     * Número de filiação do estabelecimento distribuidor ou da empresa compradora (B2B)
+     * 
+     * O parâmetro “DISTRIBUIDOR” é específico para estabelecimentos que vendem através de distribuidores
+     * ou que realizam B2B. Ele deverá conter o nº de filiação do estabelecimento responsável pela transação
+     * (distribuidor ou empresa compradora de B2B), cadastrado junto a Redecard. Caso o estabelecimento
+     * não pertença aos segmentos citados acima ou caso o próprio fornecedor é que seja o responsável
+     * pela transação em questão, basta enviar este parâmetro com valor vazio.
+     * 
+     * Obs: O distribuidor só pode confirmar as transações de pré-autorização
+     * que ele mesmo realizou, em nome e em favor de seu fornecedor.
+     * 
+     * 9 bytes
+     * 
+     * @param string $distribuidor
+     * @return \Komerci\AuthorizationCancel
+     */
+    public function setDistribuidor($distribuidor)
+    {
+        $this->distribuidor = $distribuidor;
+
         return $this;
     }
 
     /**
      * Get Total
      * 
-     * Valor total da compra
-     * 
      * O parâmetro “TOTAL” deverá conter o valor total da transação.
-     * Este valor deverá ser separado por “.” (ponto). Exemplo: 34.60
-     * Não deve conter separador de milhar
-     * É obrigatória a existência de duas casas decimais.
+     * 
+     * Obs1: Este valor deverá ser separado por “.” (ponto). Exemplo: 34.60
+     * Obs2: Não deve conter separador de milhar
+     * Obs3: É obrigatória a existência de duas casas decimais.
+     * Obs4: No caso específico de Companhias Aéreas, este parâmetro
+     * deverá conter o valor resultante da somatória dos valores das
+     * passagens aéreas sem a “Taxa de Embarque”.
      * 
      * 10 bytes
      * 
@@ -194,63 +242,24 @@ class Capture
     /**
      * Set Total
      * 
-     * Valor total da compra
-     * 
      * O parâmetro “TOTAL” deverá conter o valor total da transação.
-     * Este valor deverá ser separado por “.” (ponto). Exemplo: 34.60
-     * Não deve conter separador de milhar
-     * É obrigatória a existência de duas casas decimais.
+     * 
+     * Obs1: Este valor deverá ser separado por “.” (ponto). Exemplo: 34.60
+     * Obs2: Não deve conter separador de milhar
+     * Obs3: É obrigatória a existência de duas casas decimais.
+     * Obs4: No caso específico de Companhias Aéreas, este parâmetro
+     * deverá conter o valor resultante da somatória dos valores das
+     * passagens aéreas sem a “Taxa de Embarque”.
      * 
      * 10 bytes
      * 
      * @param string $total Valor total da compra
-     * @return \Komerci\Capture
+     * @return \Komerci\AuthorizationCancel
      */
     public function setTotal($total)
     {
         $this->total = $total;
-        
-        return $this;
-    }
 
-    /**
-     * Get Parcelas
-     * 
-     * Número de Parcelas
-     * 
-     * O parâmetro “PARCELAS” deverá conter o nº de parcelas da transação no formato “99”. A decisão
-     * sobre o parcelamento ou não da transação é tomada neste momento de confirmação, e não
-     * na solicitação de captura de pré-autorização (Passo 1). Para efetuar transações à vista, o parâmetro
-     * “PARCELAS” deverá ser preenchido com o valor “00” (zero zero).
-     * 
-     * 2 bytes
-     * 
-     * @return string Número de Parcelas
-     */
-    public function getParcelas()
-    {
-        return $this->parcelas;
-    }
-
-    /**
-     * Set Parcelas
-     * 
-     * Número de Parcelas
-     * 
-     * O parâmetro “PARCELAS” deverá conter o nº de parcelas da transação no formato “99”. A decisão
-     * sobre o parcelamento ou não da transação é tomada neste momento de confirmação, e não
-     * na solicitação de captura de pré-autorização (Passo 1). Para efetuar transações à vista, o parâmetro
-     * “PARCELAS” deverá ser preenchido com o valor “00” (zero zero).
-     * 
-     * 2 bytes
-     * 
-     * @param string $parcelas Número de Parcelas
-     * @return \Komerci\Capture
-     */
-    public function setParcelas($parcelas)
-    {
-        $this->parcelas = $parcelas;
-        
         return $this;
     }
 
@@ -280,12 +289,12 @@ class Capture
      * 8 bytes
      * 
      * @param string $data Data da transação
-     * @return \Komerci\Capture
+     * @return \Komerci\AuthorizationCancel
      */
     public function setData($data)
     {
         $this->data = $data;
-        
+
         return $this;
     }
 
@@ -319,12 +328,12 @@ class Capture
      * 6 bytes
      * 
      * @param string $numAutor Número de Autorização
-     * @return \Komerci\Capture
+     * @return \Komerci\AuthorizationCancel
      */
     public function setNumAutor($numAutor)
     {
         $this->numAutor = $numAutor;
-        
+
         return $this;
     }
 
@@ -344,7 +353,7 @@ class Capture
     {
         return $this->numCv;
     }
-    
+
     /**
      * Set NumCv
      * 
@@ -356,12 +365,12 @@ class Capture
      * 9 bytes
      * 
      * @param string $numCv Número do Comprovante de Venda (NSU)
-     * @return \Komerci\Capture
+     * @return \Komerci\AuthorizationCancel
      */
     public function setNumCv($numCv)
     {
         $this->numCv = $numCv;
-        
+
         return $this;
     }
 
@@ -393,12 +402,12 @@ class Capture
      * 16 bytes
      * 
      * @param string $usr Código do usuário Master
-     * @return \Komerci\Capture
+     * @return \Komerci\AuthorizationCancel
      */
     public function setUsr($usr)
     {
         $this->usr = $usr;
-        
+
         return $this;
     }
 
@@ -428,12 +437,12 @@ class Capture
      * 20 bytes
      * 
      * @param string $pwd Senha de acesso do usuário Master
-     * @return \Komerci\Capture
+     * @return \Komerci\AuthorizationCancel
      */
     public function setPwd($pwd)
     {
         $this->pwd = $pwd;
-        
+
         return $this;
     }
 
@@ -445,11 +454,10 @@ class Capture
     protected function getRequestArray()
     {
         return array(
-            'ConfPreAuthorization' => array(
+            'VoidPreAuthorization' => array(
                 'Filiacao' => $this->filiacao,
                 'Distribuidor' => $this->distribuidor,
                 'Total' => $this->total,
-                'Parcelas' => $this->parcelas,
                 'Data' => $this->data,
                 'NumAutor' => $this->numAutor,
                 'NumCv' => $this->numCv,
@@ -459,20 +467,19 @@ class Capture
             )
         );
     }
-    
+
     /**
-     * Send Capture Request to Komerci SOAP Server
+     * Send Authorization Cancel Request to Komerci SOAP Server
      * 
-     * @return \Komerci\CaptureResponse
+     * @return \Komerci\AuthorizationCancel
      */
     public function send()
     {
-        $xmlResult = Client::SoapRequest('ConfPreAuthorization', $this->getRequestArray());
-        $captureResponse = new CaptureResponse();
-        $captureResponse->setResultXml($xmlResult);
+        $xmlResult = Client::SoapRequest('VoidPreAuthorization', $this->getRequestArray());
+        $authorizationCancelResponse = new AuthorizationCancelResponse();
+        $authorizationCancelResponse->setResultXml($xmlResult);
 
-        return $captureResponse;
+        return $authorizationCancelResponse;
     }
-
 
 }
