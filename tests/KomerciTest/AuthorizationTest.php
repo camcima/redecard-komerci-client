@@ -5,7 +5,7 @@ namespace KomerciTest;
 use Komerci\Authorization;
 
 /**
- * KomerciAuthorizationTest
+ * AuthorizationTest
  *
  * @author Carlos Cima
  */

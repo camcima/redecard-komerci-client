@@ -16,6 +16,7 @@ class Authorization
     const TYPE_PARCELADO_ESTABELECIMENTO = '08';
     const TYPE_IATA_A_VISTA = '39';
     const TYPE_IATA_PARCELADO = '40';
+    const TYPE_PRE_AUTHORIZATION = '73';
 
     /**
      * Valor total da compra
@@ -44,6 +45,7 @@ class Authorization
      * Parcelado Estabelecimento    => 08
      * IATA à vista                 => 39
      * IATA Parcelado               => 40
+     * Pré-Autorização              => 73
      * 
      * 2 bytes
      * 
@@ -330,7 +332,7 @@ class Authorization
      * 
      * 10 bytes
      * 
-     * @return string
+     * @return string Valor total da compra
      */
     public function getTotal()
     {
@@ -347,8 +349,7 @@ class Authorization
      * Não deve conter separador de milhar
      * É obrigatória a existência de duas casas decimais.
      * 
-     * @param string $total 10 bytes
-     * 
+     * @param string $total Valor total da compra
      * @return \Komerci\Authorization
      */
     public function setTotal($total)
@@ -376,7 +377,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @return string
+     * @return string Tipo de Transação
      */
     public function getTransacao()
     {
@@ -401,8 +402,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @param string $transacao
-     * 
+     * @param string $transacao Tipo de Transação
      * @return \Komerci\Authorization
      */
     public function setTransacao($transacao)
@@ -428,7 +428,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @return string
+     * @return string Número de Parcelas
      */
     public function getParcelas()
     {
@@ -448,7 +448,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @param string $parcelas
+     * @param string $parcelas Número de Parcelas
      * @return \Komerci\Authorization
      */
     public function setParcelas($parcelas)
@@ -467,7 +467,7 @@ class Authorization
      * 
      * 9 bytes
      * 
-     * @return string
+     * @return string Número de filiação do estabelecimento (fornecedor)
      */
     public function getFiliacao()
     {
@@ -483,7 +483,7 @@ class Authorization
      * 
      * 9 bytes
      * 
-     * @param type $filiacao
+     * @param type $filiacao Número de filiação do estabelecimento (fornecedor)
      * @return \Komerci\Authorization
      */
     public function setFiliacao($filiacao)
@@ -508,7 +508,7 @@ class Authorization
      * 
      * 16 bytes
      * 
-     * @return string
+     * @return string Número do pedido gerado pelo estabelecimento
      */
     public function getNumPedido()
     {
@@ -530,7 +530,7 @@ class Authorization
      * 
      * 16 bytes
      * 
-     * @param type $numPedido
+     * @param type $numPedido Número do pedido gerado pelo estabelecimento
      * @return \Komerci\Authorization
      */
     public function setNumPedido($numPedido)
@@ -550,7 +550,7 @@ class Authorization
      * 
      * 16 bytes
      * 
-     * @return string
+     * @return string Número do cartão
      */
     public function getNrCartao()
     {
@@ -567,7 +567,7 @@ class Authorization
      * 
      * 16 bytes
      * 
-     * @param string $nrCartao
+     * @param string $nrCartao Número do cartão
      * @return \Komerci\Authorization
      */
     public function setNrCartao($nrCartao)
@@ -584,7 +584,7 @@ class Authorization
      * 
      * 3 bytes
      * 
-     * @return string
+     * @return string CVC2
      */
     public function getCvc2()
     {
@@ -600,7 +600,7 @@ class Authorization
      * 
      * 3 bytes
      * 
-     * @param string $cvc2
+     * @param string $cvc2 CVC2
      * @return \Komerci\Authorization
      */
     public function setCvc2($cvc2)
@@ -620,7 +620,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @return string
+     * @return string Mês da validade do cartão
      */
     public function getMes()
     {
@@ -637,7 +637,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @param string $mes
+     * @param string $mes Mês da validade do cartão
      * @return \Komerci\Authorization
      */
     public function setMes($mes)
@@ -657,7 +657,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @return string
+     * @return string Ano da validade do cartão
      */
     public function getAno()
     {
@@ -674,7 +674,7 @@ class Authorization
      * 
      * 2 bytes
      * 
-     * @param string $ano
+     * @param string $ano Ano da validade do cartão
      * @return \Komerci\Authorization
      */
     public function setAno($ano)
@@ -693,7 +693,7 @@ class Authorization
      * 
      * 30 bytes
      * 
-     * @return string
+     * @return string Nome do portador
      */
     public function getPortador()
     {
@@ -709,7 +709,7 @@ class Authorization
      * 
      * 30 bytes
      * 
-     * @param string $portador
+     * @param string $portador Nome do portador
      * @return \Komerci\Authorization
      */
     public function setPortador($portador)

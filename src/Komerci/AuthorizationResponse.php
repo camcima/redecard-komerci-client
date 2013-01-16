@@ -52,7 +52,7 @@ class AuthorizationResponse
      * 
      * O parâmetro “DATA” retornará a data em que a transação foi autorizada (no formato AAAAMMDD).
      * 
-     * 2 bytes
+     * 8 bytes
      * 
      * @var string
      */
@@ -171,7 +171,7 @@ class AuthorizationResponse
      * 
      * 2 bytes
      * 
-     * @return string
+     * @return string Código de retorno
      */
     public function getCodRet()
     {
@@ -189,7 +189,7 @@ class AuthorizationResponse
      * 
      * 160 bytes
      * 
-     * @return string
+     * @return string Descrição do código de retorno
      */
     public function getMsgRet()
     {
@@ -206,7 +206,7 @@ class AuthorizationResponse
      * 
      * 16 bytes
      * 
-     * @return string
+     * @return string Número do Pedido
      */
     public function getNumPedido()
     {
@@ -220,9 +220,9 @@ class AuthorizationResponse
      * 
      * O parâmetro “DATA” retornará a data em que a transação foi autorizada (no formato AAAAMMDD).
      * 
-     * 2 bytes
+     * 8 bytes
      * 
-     * @return string
+     * @return string Data da transação
      */
     public function getData()
     {
@@ -238,7 +238,7 @@ class AuthorizationResponse
      * 
      * 6 bytes
      * 
-     * @return string
+     * @return string Número de Autorização
      */
     public function getNumAutor()
     {
@@ -254,7 +254,7 @@ class AuthorizationResponse
      * 
      * 9 bytes
      * 
-     * @return string
+     * @return string Número do Comprovante de Venda (NSU)
      */
     public function getNumCv()
     {
@@ -270,7 +270,7 @@ class AuthorizationResponse
      * 
      * 27 bytes
      * 
-     * @return string
+     * @return string Número de Autenticação
      */
     public function getNumAutent()
     {
@@ -286,7 +286,7 @@ class AuthorizationResponse
      * 
      * 12 bytes
      * 
-     * @return string
+     * @return string Número seqüencial único
      */
     public function getNumSqn()
     {
@@ -313,7 +313,7 @@ class AuthorizationResponse
      * 
      * 3 bytes
      * 
-     * @return string
+     * @return string Código do país emissor
      */
     public function getOrigemBin()
     {
@@ -332,7 +332,7 @@ class AuthorizationResponse
      * 
      * 2 bytes
      * 
-     * @return string
+     * @return string Código de retorno da confirmação automática
      */
     public function getConfCodRet()
     {
@@ -352,7 +352,7 @@ class AuthorizationResponse
      * 
      * 160 bytes
      * 
-     * @return string
+     * @return string Descrição do código de retorno
      */
     public function getConfMsgRet()
     {
@@ -362,7 +362,7 @@ class AuthorizationResponse
     /**
      * Get RawResponse
      * 
-     * @return string Response XML
+     * @return string XML Response
      */
     public function getRawResponse()
     {
@@ -376,7 +376,7 @@ class AuthorizationResponse
      * CODRET estiver zerado (0) e o parâmetro NUMCV estiver diferente de vazio.
      * Em qualquer outra situação, a transação NÂO está APROVADA.
      * 
-     * @return boolean
+     * @return boolean Is Authorization Approved?
      */
     public function isApproved()
     {
@@ -390,7 +390,7 @@ class AuthorizationResponse
     /**
      * Set Authorization Result XML
      * 
-     * @param string $xmlResult
+     * @param string $xmlResult Authorization Result XML
      */
     public function setResultXml($xmlResult)
     {
@@ -405,7 +405,7 @@ class AuthorizationResponse
     {
         $simpleXml = simplexml_load_string($this->rawResponse);
         foreach ($simpleXml->children() as $childName => $childValue) {
-            switch ($childName):
+            switch (strtoupper($childName)):
                 case 'CODRET':
                     $this->codRet = $childValue;
                     break;
