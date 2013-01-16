@@ -16,7 +16,7 @@ class Client
         if ($debug) {
             $soapClientParams['trace'] = 1;
         }
-        $soapClient = new \SoapClient($wsdlUrl, $soapClientParams);
+        $soapClient = new \SoapClient($wsdlUrl, $soapClientParams); // optionally use KomerciSoapClient to format the XML according to the specs
         $soapResult = $soapClient->__soapCall($methodName, $parameters);
         if ($debug) {
             var_dump($soapClient->__getLastRequest());
