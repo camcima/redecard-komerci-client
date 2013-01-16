@@ -120,7 +120,6 @@ class CaptureResponse
     {
         $simpleXml = simplexml_load_string($this->rawResponse);
         foreach ($simpleXml->root->children() as $childName => $childValue) {
-            echo $childName . "\n";
             switch (strtoupper($childName)):
                 case 'CODRET':
                     $this->codRet = $childValue;
