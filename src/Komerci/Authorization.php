@@ -5,7 +5,7 @@ namespace Komerci;
 use Komerci\AuthorizationResponse;
 
 /**
- * Description of Komerci
+ * Authorization
  *
  * @author Carlos Cima
  */

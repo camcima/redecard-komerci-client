@@ -3,7 +3,7 @@
 namespace Komerci;
 
 /**
- * Description of AuthorizationCancel
+ * AuthorizationCancel
  * 
  * Essa operação tem como objetivo cancelar a sensibilização do saldo do cartão do portador
  * utilizando o método VoidPreAuthorization.

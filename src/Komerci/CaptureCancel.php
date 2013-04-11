@@ -3,7 +3,7 @@
 namespace Komerci;
 
 /**
- * Description of CaptureCancel
+ * CaptureCancel
  * 
  * Essa operação tem como objetivo cancelar uma transação de pré-autorização utilizando o método
  * VoidConfPreAuthorization.
