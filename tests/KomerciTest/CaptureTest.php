@@ -22,6 +22,5 @@ class CaptureTest extends AbstractTest
         $capture->setUsr('chongas');
         $capture->setPwd('mariola');
         $result = $capture->send();
-        var_dump($result, $result->isCaptured());
     }
 }

@@ -21,6 +21,5 @@ class CaptureCancelTest extends AbstractTest
         $cancel->setUsr('chongas');
         $cancel->setPwd('mariola');
         $result = $cancel->send();
-        var_dump($result, $result->isCanceled());
     }
 }

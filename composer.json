@@ -4,7 +4,6 @@
     "authors": [
         {
             "name": "Carlos Cima",
-            "email": "ccima@rocket-internet.com"
         }
     ],
     "minimum-stability": "dev",

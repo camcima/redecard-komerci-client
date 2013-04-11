@@ -20,6 +20,5 @@ class ChargebackTest extends AbstractTest
         $chargeback->setUsr('chongas');
         $chargeback->setPwd('mariola');
         $result = $chargeback->send();
-        var_dump($result, $result->isCanceled());
     }
 }
