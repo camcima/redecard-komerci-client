@@ -21,6 +21,13 @@ namespace Komerci;
 class CaptureCancel
 {
     /**
+     * Is Test
+     * 
+     * @var boolean 
+     */
+    protected $isTest;
+
+    /**
      * Número de filiação do estabelecimento (fornecedor)
      * 
      * O parâmetro “FILIAÇÃO” deverá conter o nº de filiação do estabelecimento cadastrado com a Redecard.
@@ -121,6 +128,16 @@ class CaptureCancel
      * @var string
      */
     protected $pwd;
+
+    /**
+     * Constructor
+     * 
+     * @param boolean $isTest
+     */
+    function __construct($isTest = false)
+    {
+        $this->isTest = $isTest;
+    }
 
     /**
      * Get Filiacao
@@ -413,7 +430,7 @@ class CaptureCancel
      */
     public function send()
     {
-        $xmlResult = Client::SoapRequest('VoidConfPreAuthorization', $this->getRequestArray(), true);
+        $xmlResult = Client::SoapRequest('VoidConfPreAuthorization', $this->getRequestArray(), $this->isTest);
         $captureCancelResponse = new CaptureCancelResponse();
         $captureCancelResponse->setResultXml($xmlResult);
 

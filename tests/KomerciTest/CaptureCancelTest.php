@@ -11,7 +11,8 @@ use Komerci\CaptureCancel;
  */
 class CaptureCancelTest extends AbstractTest
 {
-    public function testCaptureCancel() {
+    public function testCaptureCancel()
+    {
         $cancel = new CaptureCancel();
         $cancel->setFiliacao('037916785');
         $cancel->setTotal(10);
@@ -21,5 +22,8 @@ class CaptureCancelTest extends AbstractTest
         $cancel->setUsr('chongas');
         $cancel->setPwd('mariola');
         $result = $cancel->send();
+
+        $this->assertInstanceOf('\Komerci\CaptureCancelResponse', $result);
     }
+
 }

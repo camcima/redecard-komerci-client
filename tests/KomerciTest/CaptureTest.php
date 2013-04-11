@@ -11,7 +11,8 @@ use Komerci\Capture;
  */
 class CaptureTest extends AbstractTest
 {
-    public function testCapture() {
+    public function testCapture()
+    {
         $capture = new Capture();
         $capture->setFiliacao('037916785');
         $capture->setTotal(10);
@@ -22,5 +23,8 @@ class CaptureTest extends AbstractTest
         $capture->setUsr('chongas');
         $capture->setPwd('mariola');
         $result = $capture->send();
+
+        $this->assertInstanceOf('\Komerci\CaptureResponse', $result);
     }
+
 }

@@ -12,6 +12,13 @@ namespace Komerci;
 class Chargeback
 {
     /**
+     * Is Test
+     * 
+     * @var boolean 
+     */
+    protected $isTest;
+
+    /**
      * Valor total da compra
      * 
      * O parâmetro “TOTAL” deverá conter o valor total da transação.
@@ -47,7 +54,7 @@ class Chargeback
      * @var string
      */
     protected $numCv;
-    
+
     /**
      * Número de Autorização
      * 
@@ -71,7 +78,7 @@ class Chargeback
      * @var string
      */
     protected $concentrador = '';
-    
+
     /**
      * Código do usuário Master
      * 
@@ -83,7 +90,7 @@ class Chargeback
      * @var string
      */
     protected $usr;
-    
+
     /**
      * Senha de acesso do usuário Master
      * 
@@ -95,7 +102,16 @@ class Chargeback
      */
     protected $pwd;
 
-    
+    /**
+     * Constructor
+     * 
+     * @param boolean $isTest
+     */
+    function __construct($isTest = false)
+    {
+        $this->isTest = $isTest;
+    }
+
     /**
      * Get Total
      * 
@@ -133,10 +149,10 @@ class Chargeback
     public function setTotal($total)
     {
         $this->total = $total;
-        
+
         return $this;
     }
-    
+
     /**
      * Get Filiacao
      * 
@@ -168,7 +184,7 @@ class Chargeback
     public function setFiliacao($filiacao)
     {
         $this->filiacao = $filiacao;
-        
+
         return $this;
     }
 
@@ -188,7 +204,7 @@ class Chargeback
     {
         return $this->numCv;
     }
-    
+
     /**
      * Set NumCv
      * 
@@ -205,10 +221,10 @@ class Chargeback
     public function setNumCv($numCv)
     {
         $this->numCv = $numCv;
-        
+
         return $this;
     }
-    
+
     /**
      * Get NumAutor
      * 
@@ -244,10 +260,9 @@ class Chargeback
     public function setNumAutor($numAutor)
     {
         $this->numAutor = $numAutor;
-        
+
         return $this;
     }
-
 
     /**
      * Get Usr
@@ -282,7 +297,7 @@ class Chargeback
     public function setUsr($usr)
     {
         $this->usr = $usr;
-        
+
         return $this;
     }
 
@@ -317,7 +332,7 @@ class Chargeback
     public function setPwd($pwd)
     {
         $this->pwd = $pwd;
-        
+
         return $this;
     }
 
@@ -340,7 +355,7 @@ class Chargeback
             )
         );
     }
-    
+
     /**
      * Send Capture Request to Komerci SOAP Server
      * 
@@ -348,12 +363,11 @@ class Chargeback
      */
     public function send()
     {
-        $xmlResult = Client::SoapRequest('VoidTransaction', $this->getRequestArray());
+        $xmlResult = Client::SoapRequest('VoidTransaction', $this->getRequestArray(), $this->isTest);
         $chargebackResponse = new ChargebackResponse();
         $chargebackResponse->setResultXml($xmlResult);
 
         return $chargebackResponse;
     }
-
 
 }

@@ -12,7 +12,7 @@ use Komerci\Authorization;
 class AuthorizationTest extends AbstractTest
 {
     public function testAuthorization() {
-        $auth = new Authorization();
+        $auth = new Authorization(true);
         $auth->setTotal('1000');
         $auth->setNrCartao('5555666677778884');
         $auth->setMes('4');
@@ -23,5 +23,7 @@ class AuthorizationTest extends AbstractTest
         $auth->setPortador('CHONGAS MARIOLA');
         $auth->setNumPedido('0001');
         $result = $auth->send();
+        
+        $this->assertInstanceOf('\Komerci\AuthorizationResponse', $result);
     }
 }

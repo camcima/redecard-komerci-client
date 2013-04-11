@@ -11,6 +11,9 @@ use Komerci\AuthorizationResponse;
  */
 class Authorization
 {
+    /**
+     * Modalidades de Pagamento
+     */
     const TYPE_A_VISTA = '04';
     const TYPE_PARCELADO_EMISSOR = '06';
     const TYPE_PARCELADO_ESTABELECIMENTO = '08';
@@ -18,6 +21,13 @@ class Authorization
     const TYPE_IATA_PARCELADO = '40';
     const TYPE_PRE_AUTHORIZATION = '73';
 
+    /**
+     * Is Test
+     * 
+     * @var boolean 
+     */
+    protected $isTest;
+    
     /**
      * Valor total da compra
      * 
@@ -319,6 +329,16 @@ class Authorization
      * @var string
      */
     protected $addData = '';
+    
+    /**
+     * Constructor
+     * 
+     * @param boolean $isTest
+     */
+    function __construct($isTest = false)
+    {
+        $this->isTest = $isTest;
+    }
 
     /**
      * Get Total
@@ -764,7 +784,7 @@ class Authorization
      */
     public function send()
     {
-        $xmlResult = Client::SoapRequest('GetAuthorized', $this->getRequestArray());
+        $xmlResult = Client::SoapRequest('GetAuthorized', $this->getRequestArray(), $this->isTest);
         $authorizationResponse = new AuthorizationResponse();
         $authorizationResponse->setResultXml($xmlResult);
 

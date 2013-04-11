@@ -13,6 +13,13 @@ namespace Komerci;
 class AuthorizationCancel
 {
     /**
+     * Is Test
+     * 
+     * @var boolean 
+     */
+    protected $isTest;
+
+    /**
      * Número de filiação do estabelecimento (fornecedor)
      * 
      * O parâmetro “FILIAÇÃO” deverá conter o nº de filiação do estabelecimento cadastrado com a Redecard.
@@ -133,6 +140,16 @@ class AuthorizationCancel
      * @var string
      */
     protected $pwd;
+
+    /**
+     * Constructor
+     * 
+     * @param boolean $isTest
+     */
+    function __construct($isTest = false)
+    {
+        $this->isTest = $isTest;
+    }
 
     /**
      * Get Filiacao
@@ -475,7 +492,7 @@ class AuthorizationCancel
      */
     public function send()
     {
-        $xmlResult = Client::SoapRequest('VoidPreAuthorization', $this->getRequestArray());
+        $xmlResult = Client::SoapRequest('VoidPreAuthorization', $this->getRequestArray(), $this->isTest);
         $authorizationCancelResponse = new AuthorizationCancelResponse();
         $authorizationCancelResponse->setResultXml($xmlResult);
 

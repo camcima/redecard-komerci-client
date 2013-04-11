@@ -11,7 +11,8 @@ use Komerci\AuthorizationCancel;
  */
 class AuthorizationCancelTest extends AbstractTest
 {
-    public function testAuthorizationCancel() {
+    public function testAuthorizationCancel()
+    {
         $cancel = new AuthorizationCancel();
         $cancel->setFiliacao('037916785');
         $cancel->setTotal(10);
@@ -21,5 +22,8 @@ class AuthorizationCancelTest extends AbstractTest
         $cancel->setUsr('chongas');
         $cancel->setPwd('mariola');
         $result = $cancel->send();
+
+        $this->assertInstanceOf('\Komerci\AuthorizationCancelResponse', $result);
     }
+
 }

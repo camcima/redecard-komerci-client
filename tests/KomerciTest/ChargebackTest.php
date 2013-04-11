@@ -11,7 +11,8 @@ use Komerci\Chargeback;
  */
 class ChargebackTest extends AbstractTest
 {
-    public function testChargebackCancel() {
+    public function testChargebackCancel()
+    {
         $chargeback = new Chargeback();
         $chargeback->setTotal(10);
         $chargeback->setFiliacao('037916785');
@@ -20,5 +21,8 @@ class ChargebackTest extends AbstractTest
         $chargeback->setUsr('chongas');
         $chargeback->setPwd('mariola');
         $result = $chargeback->send();
+
+        $this->assertInstanceOf('\Komerci\ChargebackResponse', $result);
     }
+
 }

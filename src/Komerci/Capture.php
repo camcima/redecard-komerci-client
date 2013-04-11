@@ -16,6 +16,13 @@ namespace Komerci;
 class Capture
 {
     /**
+     * Is Test
+     * 
+     * @var boolean 
+     */
+    protected $isTest;
+
+    /**
      * Número de filiação do estabelecimento (fornecedor)
      * 
      * O parâmetro “FILIAÇÃO” deverá conter o nº de filiação do estabelecimento cadastrado com a Redecard.
@@ -111,7 +118,7 @@ class Capture
      * @var string
      */
     protected $concentrador = '';
-    
+
     /**
      * Código do usuário Master
      * 
@@ -123,7 +130,7 @@ class Capture
      * @var string
      */
     protected $usr;
-    
+
     /**
      * Senha de acesso do usuário Master
      * 
@@ -135,8 +142,16 @@ class Capture
      */
     protected $pwd;
 
-    
-    
+    /**
+     * Constructor
+     * 
+     * @param boolean $isTest
+     */
+    function __construct($isTest = false)
+    {
+        $this->isTest = $isTest;
+    }
+
     /**
      * Get Filiacao
      * 
@@ -168,7 +183,7 @@ class Capture
     public function setFiliacao($filiacao)
     {
         $this->filiacao = $filiacao;
-        
+
         return $this;
     }
 
@@ -209,7 +224,7 @@ class Capture
     public function setTotal($total)
     {
         $this->total = $total;
-        
+
         return $this;
     }
 
@@ -250,7 +265,7 @@ class Capture
     public function setParcelas($parcelas)
     {
         $this->parcelas = $parcelas;
-        
+
         return $this;
     }
 
@@ -285,7 +300,7 @@ class Capture
     public function setData($data)
     {
         $this->data = $data;
-        
+
         return $this;
     }
 
@@ -324,7 +339,7 @@ class Capture
     public function setNumAutor($numAutor)
     {
         $this->numAutor = $numAutor;
-        
+
         return $this;
     }
 
@@ -344,7 +359,7 @@ class Capture
     {
         return $this->numCv;
     }
-    
+
     /**
      * Set NumCv
      * 
@@ -361,7 +376,7 @@ class Capture
     public function setNumCv($numCv)
     {
         $this->numCv = $numCv;
-        
+
         return $this;
     }
 
@@ -398,7 +413,7 @@ class Capture
     public function setUsr($usr)
     {
         $this->usr = $usr;
-        
+
         return $this;
     }
 
@@ -433,7 +448,7 @@ class Capture
     public function setPwd($pwd)
     {
         $this->pwd = $pwd;
-        
+
         return $this;
     }
 
@@ -459,7 +474,7 @@ class Capture
             )
         );
     }
-    
+
     /**
      * Send Capture Request to Komerci SOAP Server
      * 
@@ -467,12 +482,11 @@ class Capture
      */
     public function send()
     {
-        $xmlResult = Client::SoapRequest('ConfPreAuthorization', $this->getRequestArray());
+        $xmlResult = Client::SoapRequest('ConfPreAuthorization', $this->getRequestArray(), $this->isTest);
         $captureResponse = new CaptureResponse();
         $captureResponse->setResultXml($xmlResult);
 
         return $captureResponse;
     }
-
 
 }
