@@ -1,5 +1,8 @@
 {
     "name": "camcima/redecard-komerci-client",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["payment", "redecard", "gateway", "api", "credit card"],
     "description": "Client for Redecard Gateway - Komerci",
     "authors": [
         {
