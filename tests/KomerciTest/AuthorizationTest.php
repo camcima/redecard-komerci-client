@@ -23,6 +23,5 @@ class AuthorizationTest extends AbstractTest
         $auth->setPortador('CHONGAS MARIOLA');
         $auth->setNumPedido('0001');
         $result = $auth->send();
-        var_dump($result);
     }
 }
