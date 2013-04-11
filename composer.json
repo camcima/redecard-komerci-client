@@ -3,7 +3,7 @@
     "description": "Client for Redecard Gateway - Komerci",
     "authors": [
         {
-            "name": "Carlos Cima",
+            "name": "Carlos Cima"
         }
     ],
     "minimum-stability": "dev",
