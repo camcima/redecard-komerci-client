@@ -122,10 +122,10 @@ class AuthorizationCancelResponse
         foreach ($simpleXml->root->children() as $childName => $childValue) {
             switch (strtoupper($childName)):
                 case 'CODRET':
-                    $this->codRet = $childValue;
+                    $this->codRet = (string) $childValue;
                     break;
                 case 'MSGRET':
-                    $this->msgRet = $childValue;
+                    $this->msgRet = (string) $childValue;
                     break;
             endswitch;
         }

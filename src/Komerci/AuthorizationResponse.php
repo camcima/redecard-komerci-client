@@ -407,31 +407,31 @@ class AuthorizationResponse
         foreach ($simpleXml->children() as $childName => $childValue) {
             switch (strtoupper($childName)):
                 case 'CODRET':
-                    $this->codRet = $childValue;
+                    $this->codRet = (string) $childValue;
                     break;
                 case 'MSGRET':
-                    $this->msgRet = $childValue;
+                    $this->msgRet = (string) $childValue;
                     break;
                 case 'NUMPEDIDO':
-                    $this->numPedido = $childValue;
+                    $this->numPedido = (string) $childValue;
                     break;
                 case 'DATA':
-                    $this->data = $childValue;
+                    $this->data = (string) $childValue;
                     break;
                 case 'NUMAUTOR':
-                    $this->numAutor = $childValue;
+                    $this->numAutor = (string) $childValue;
                     break;
                 case 'NUMCV':
-                    $this->numCv = $childValue;
+                    $this->numCv = (string) $childValue;
                     break;
                 case 'NUMAUTENT':
-                    $this->numAutent = $childValue;
+                    $this->numAutent = (string) $childValue;
                     break;
                 case 'NUMSQN':
-                    $this->numSqn = $childValue;
+                    $this->numSqn = (string) $childValue;
                     break;
                 case 'ORIGEM_BIN':
-                    $this->origemBin = $childValue;
+                    $this->origemBin = (string) $childValue;
                     break;
             endswitch;
         }
