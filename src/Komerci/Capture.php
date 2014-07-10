@@ -453,6 +453,22 @@ class Capture
     }
 
     /**
+     * @param boolean $isTest
+     */
+    public function setIsTest($isTest)
+    {
+        $this->isTest = $isTest;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsTest()
+    {
+        return $this->isTest;
+    }
+
+    /**
      * Get Request Array
      * 
      * @return array
