@@ -740,6 +740,38 @@ class Authorization
     }
 
     /**
+     * @param string $confTxn
+     */
+    public function setConfTxn($confTxn)
+    {
+        $this->confTxn = $confTxn;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfTxn()
+    {
+        return $this->confTxn;
+    }
+
+    /**
+     * @param boolean $isTest
+     */
+    public function setIsTest($isTest)
+    {
+        $this->isTest = $isTest;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsTest()
+    {
+        return $this->isTest;
+    }
+
+    /**
      * Get Request Array
      * 
      * @return array
